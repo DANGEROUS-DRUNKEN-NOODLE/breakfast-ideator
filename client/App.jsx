@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
-import LandingContainer from './components/LandingContainer';
-import RecipeSearch from './containers/RecipeSearch';
+import LandingContainer from './containers/LandingContainer';
+import RecipeSearch from './containers/RecipeSearchContainer';
 import RecipeDetails from './components/RecipeDetails';
 import Pantry from './components/Pantry';
 import Recipe from './components/Recipe';
@@ -33,7 +33,7 @@ const App = (props) => {
           <Route exact path="/home">
             <LandingContainer recipes={recipes} buildRecipes={buildRecipes}/>
           </Route>
-          <Route exact path="/search">
+          <Route path="/search">
             <RecipeSearch recipes={recipes} buildRecipes={buildRecipes}/>
           </Route>
           <Route exact path="/pantry" component={Pantry} />
