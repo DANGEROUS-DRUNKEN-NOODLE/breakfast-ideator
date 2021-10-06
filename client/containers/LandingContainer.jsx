@@ -12,7 +12,6 @@ export default function LandingContainer (props) {
       .catch(err => console.log(err));
   };
 
-
   return (
     <div id="landing-container">
     <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
