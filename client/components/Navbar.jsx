@@ -78,9 +78,9 @@ class Navbar extends Component {
               </Link>
 
             </Typography>
-            <Button color="inherit" href="/auth/google">
+            {/* <Button color="inherit" href="/auth/google">
               Login
-            </Button>
+            </Button> */}
           </Toolbar>
         </AppBar>
       </Box>

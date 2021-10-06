@@ -58,6 +58,43 @@ passport.use(
   )
 );
 
+// passport.use(
+//   'local',
+//   new LocalStrategy(
+//   (username, password, done) => {
+//     let user = User.findOne({ username: profile.displayName }, (err, user) => {
+     
+//       if (!user) {
+//       const {
+//         id: googleId,
+//         displayName: username,
+//         name: { familyName: lastName, givenName: firstName },
+//         _json: { email },
+//       } = profile;
+  
+//       user = await User.create({
+//         googleId,
+//         username,
+//         email,
+//         firstName,
+//         lastName,
+//       });
+//     }
+
+//       // if (!user.verifyPassword(password)) { return done(null, false); }
+//       return done(null, user);
+//       if (err) { return done(err); }
+//     });
+//   }
+// ));
+
+// router.get(
+//   '/login',
+//   passport.authenticate('local')
+//   )
+
+
+
 router.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/');
