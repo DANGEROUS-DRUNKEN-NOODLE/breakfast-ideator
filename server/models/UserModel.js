@@ -18,7 +18,6 @@ mongoose
 const userSchema = new Schema(
   {
     googleId: String,
-    username: String,
     firstName: String,
     lastName: String,
     email: { type: String, required: true },

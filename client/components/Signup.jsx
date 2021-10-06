@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Component } from 'react';
 
 // function Copyright(props) {
 //   return (
@@ -28,16 +29,57 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme();
 
-export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+
+
+class Signup extends Component {
+  constructor(props) {
+    super(props);
+    // this.state = {
+    //   firstName: '',
+    //   lastName: '',
+    //   email: '',
+    //   password: '',
+    //   redirect: false
+    // }
+    // this.handleOnChange = this.handleOnChange.bind(this);
+    this.signUp = this.signUp.bind(this);
+  }
+
+  // handleOnChange = (event) => { //?How can we get the input name so this function can be used for password too?
+  //   // Pass in the data we need to send to state
+  //   const name = event.target.name;
+  //   const inputValue = event.target.value;
+
+  //   if (event.target.name === "firstName") {this.setState({firstName: inputValue });}
+  //   if (event.target.name === "lastName") {this.setState({lastName: inputValue });}
+  //   if (event.target.name === "email") {this.setState({username: inputValue });}
+  //   if (event.target.name === "password") {this.setState({password: inputValue });}
+  // }
+  
+  signUp () {
+    let firstName = document.getElementById("firstName").value;
+    let lastName = document.getElementById("lastName").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    console.log('firstName', firstName)
+    // TO DO: CHECK WITH BACKEND ON PROPER ENDPOINT
+    fetch("/auth/signup",  {
+        method: "POST",
+        body: JSON.stringify({
+          firstName: firstName, 
+          lastName: lastName,
+          email: email,
+          password: password
+        }),
+        headers: { "Content-Type": "application/json" },
+      })
+      .then(data => data.json())
+      .then(data => {
+        console.log('data:', data)
+      })
+    };
+
+  render() {
 
   return (
     <ThemeProvider theme={theme}>
@@ -57,7 +99,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -103,7 +145,9 @@ export default function SignUp() {
               </Grid>
 
             </Grid>
+            {/* <Link href="/home"> */}
             <Button
+              onClick={this.signUp}
               type="submit"
               fullWidth
               variant="contained"
@@ -111,6 +155,7 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
+            {/* </Link> */}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/" variant="body2">
@@ -125,3 +170,6 @@ export default function SignUp() {
     </ThemeProvider>
   );
 }
+}
+
+export default Signup
