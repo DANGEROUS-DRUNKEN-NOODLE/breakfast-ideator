@@ -15,15 +15,15 @@ const App = (props) => {
 
   // Get ID numbers of user favorite recipes
   const getFavoriteIDs = () => {
-    fetch('api/favorites?id=true')
+    fetch('/api/favorites?id=true')
     .then(res => res.json())
-    .then(favoriteIDs => setFavorites(favoriteIDs))
+    .then(favoriteIDs => console.log(favoriteIDs))
     .catch(err => console.log(err));  
   }
 
   const buildRecipes = (recipes) => {
+    getFavoriteIDs();
     setRecipes(recipes.map((recipe) => {
-      getFavoriteIDs();
       return (
         <Recipe
           key={recipe.title}
