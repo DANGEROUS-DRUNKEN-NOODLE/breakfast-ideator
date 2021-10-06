@@ -1,5 +1,6 @@
 const axios = require('axios');
-
+const Recipe = require('../models/RecipeModel');
+const apiKeyAsParam = `apiKey=${process.env.API_KEY}`;
 //This is only needed for testing. We import some JSON that mimicks response of the spoonacular api
 const fs = require('fs');
 const path = require('path');
@@ -19,7 +20,6 @@ mainController.searchRecipe = async (req, res, next) => {
     };
 
     const baseUrl = 'https://api.spoonacular.com/recipes/findByIngredients';
-    const apiKeyAsParam = `apiKey=${process.env.API_KEY}`;
     const ingredientsAsParams =
       'ingredients=' + Object.keys(req.user.ingredients).join(',+');
     const optionsAsParams = new URLSearchParams(OPTIONS).toString();
@@ -44,7 +44,6 @@ mainController.getMoreRecipeInfo = async (req, res, next) => {
   next();*/
   try {
     const baseUrl = `https://api.spoonacular.com/recipes/${req.params.id}/information`;
-    const apiKeyAsParam = `apiKey=${process.env.API_KEY}`;
     axios.get(`${baseUrl}?${apiKeyAsParam}`)
     .then(response => {
       res.locals.instructions = response.data;
@@ -84,22 +83,56 @@ mainController.updateIngredients = async (req, res, next) => {
 
 // get the favorites from the fav history
 mainController.getFavorites = (req, res, next) => {
-  res.locals.favorites = req.user.favorites;
-  next();
+  try {
+    //If we are asking for id's only, return an array of the favorite recipe ID's
+    if(req.query.id){
+      res.locals.favorites = req.user.favorites;
+      return next();
+    }
+    
+    //query our recipe cache to return all recipe's with ID's from our user's favorited list
+    Recipe.find({'recipeId': {
+      $in: req.user.favorites
+    }
+    }).exec()
+    .then(async data => {
+      //Check if data contains all of the favorites in the user's favorited list. If not we must add those recipe's to data
+      for(let i = 0; i < req.user.favorites.length; i++){
+        let found = data.some(el => {
+          return el.recipeId == req.user.favorites[i];
+        })
+        //If one of the user's favorited ID's are not in the data array, get the recipe from the API and add it to data so it is returned in our request.
+        if(!found){
+          console.log('recipe not found in cached recipes')
+          const baseUrl = `https://api.spoonacular.com/recipes/${req.user.favorites[i]}/information`;
+          const recipeFromAPI = await axios.get(`${baseUrl}?${apiKeyAsParam}`);
+          data.push(recipeFromAPI.data);
+        }
+      }
+      res.locals.favorites = data;
+      return next();
+    }).catch(err => {
+      throw err
+    })
+  } catch (error) {
+    return next({
+      log: `mainController.getFavorites ERROR: ${error}`
+    })
+  }
 };
 
 // update the favorites array
 mainController.addFavorite = async (req, res, next) => {
   req.user.favorites.push(req.body.favorite);
+  req.user.markModified('favorites');
   await req.user.save();
   res.locals.favorites = req.user.favorites;
   next();
 };
 
 mainController.removeFavorite = async (req, res, next) => {
-  req.user.favorites = req.user.favorites.filter(
-    (fav) => fav !== req.body.favorite
-  );
+  req.user.favorites = req.user.favorites.filter((fav) => {return fav !== req.body.favorite});
+  req.user.markModified('favorites');
   await req.user.save();
   res.locals.favorites = req.user.favorites;
   next();
