@@ -47,7 +47,7 @@ render() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://media.istockphoto.com/photos/breakfast-with-bacon-eggs-pancakes-and-toast-picture-id533645537?k=20&m=533645537&s=612x612&w=0&h=KJXCpAo9XQvMI_djcnRMSsz_Y7OGS6z3-8VThxWyR0Q=)',
+            backgroundImage: 'url(https://images2.alphacoders.com/969/969165.jpg)',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
             backgroundSize: 'cover',

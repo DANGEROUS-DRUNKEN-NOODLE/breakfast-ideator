@@ -62,11 +62,7 @@ class Navbar extends Component {
               <Link to="/search" style={{ textDecoration: 'none', color: 'inherit' }}>
                 <MenuItem onClick={this.handleClose}>Search Recipes</MenuItem>
               </Link>
-
-              <MenuItem onClick={this.handleClose}>My account</MenuItem>
-              <a href="/auth/logout" style={{ textDecoration: 'none', color: 'inherit' }}>
-                <MenuItem onClick={this.handleClose}>Logout</MenuItem>
-              </a>
+            
             </Menu>
 
             <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
@@ -74,9 +70,9 @@ class Navbar extends Component {
                 BreakFASTic!
               </Link>
             </Typography>
-            {/* <Button color="inherit" href="/auth/google">
-              Login
-            </Button> */}
+            <a href="/auth/logout" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+              </a>
           </Toolbar>
         </AppBar>
       </Box>
