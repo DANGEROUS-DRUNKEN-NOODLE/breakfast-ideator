@@ -9,7 +9,7 @@ const Search = (props) => {
   return (
     <div>
       <Link to="/search/feed">
-        <Button variant="contained" onClick={()=> props.searchRecipes()}>
+        <Button variant="contained" onClick={()=> props.getRecipes()}>
             Find recipes
         </Button>
       </Link>

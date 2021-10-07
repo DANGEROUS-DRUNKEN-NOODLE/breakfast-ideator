@@ -17,10 +17,8 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Recipe = (props) => {
 
-    // Set a variable to store the state of the favorites checkbox
-    const [checked, setChecked] = useState(props.fav);
+    const [checked, setChecked] = useState(props.isFav);
 
-    console.log(props.fav);
     // Handle making/removing a recipe as a favorite
     const handleClick = (recipeID) => {
         // Make call to server to add recipe id in user favorites
@@ -31,7 +29,8 @@ const Recipe = (props) => {
                 body: JSON.stringify({favorite: recipeID})
             })
                 .then(res => res.json())
-                .then(res => console.log(res))
+                // Update client favorites with updated list of user Favorites
+                .then(userFavs => props.updateFavoriteIDs(userFavs))
                 .catch(err => console.log(err));
         } else { // Make call to server to remove recipe id in user favorites
             fetch('/api/favorites',{
@@ -40,7 +39,8 @@ const Recipe = (props) => {
                 body: JSON.stringify({favorite: recipeID})
             })
                 .then(res => res.json())
-                .then(res => console.log(res))
+                // Update client favorites with updated list of user Favorites
+                .then(userFavs => props.updateFavoriteIDs(userFavs))
                 .catch(err => console.log(err));
         }
     }

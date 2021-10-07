@@ -1,32 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Search from '../components/Search';
 import SearchFeed from '../components/SearchFeed';
 
-//mui stuff
-
 const RecipeSearch = (props) => {
+  const [favoriteIDs, setFavoriteIDds] = useState([]);
+  const [recipes, setRecipes] = useState([]);
 
-  // Get recipes from server and build recipe component array
-  // Redirect to the /search/feed to display fetched recipes
-  const searchRecipes = () => {
+  // Get recipes from server 
+  const getRecipes = () => {
+    updateFavoriteIDs();
     fetch('/api/recipes')
       .then(res => res.json())
       .then(recipes => {
-        props.buildRecipes(recipes);
+        setRecipes(recipes);
       })
       .catch(err => console.log(err))
+  }
+
+  // Get ID numbers of user favorite recipes
+  const updateFavoriteIDs = () => {
+    fetch('/api/favorites?id=true')
+    .then(res => res.json())
+    .then(favoriteIDs => {
+      setFavoriteIDds(favoriteIDs);
+      console.log('updateFavoriteIDs - favoriteIDs: ', favoriteIDs);
+    })
+    .catch(err => console.log(err));  
   }
 
   return (
     <div>
       <Switch>
         <Route exact path="/search">            
-          <Search searchRecipes={searchRecipes}/>
+          <Search getRecipes={getRecipes}/>
         </Route>
 
         <Route exact path="/search/feed">
-          <SearchFeed recipes={props.recipes} />
+          <SearchFeed 
+            recipes={recipes} 
+            favoriteIDs={favoriteIDs}
+            updateFavoriteIDs={updateFavoriteIDs}
+          />
         </Route>
 
       </Switch>

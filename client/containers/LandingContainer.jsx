@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Typography } from "@mui/material";
-import { ImageList } from "@mui/material";
+import LandingFeed from "../components/LandingFeed";
 
 export default function LandingContainer (props) {
 
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+
   // Get user favorites on render
-  const getFavorites = () => {
+  const getFavoriteRecipes = () => {
     fetch('api/favorites')
       .then(res => res.json())
-      .then(recipes => props.buildRecipes(recipes))
+      .then(recipes => {
+        setFavoriteRecipes(recipes);
+        console.log(recipes);
+      })
       .catch(err => console.log(err));
   };
 
@@ -17,10 +22,9 @@ export default function LandingContainer (props) {
     <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
       Favorite Recipes
     </Typography>
-      {/* Display favorite recipe results in an @mui image list */}
-      <ImageList>
-        {props.recipes}
-      </ImageList>
+      <LandingFeed 
+        favoriteRecipes={favoriteRecipes}
+      />
     </div>
   );
 }
