@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 // setting up fields for the schema with datatype
 const userSchema = new Schema(
   {
-    googleId: { type: String, required: true },
+    googleId: String,
     firstName: String,
     lastName: String,
     email: { type: String, required: true },

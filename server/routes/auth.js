@@ -1,11 +1,14 @@
 const router = require('express').Router();
 const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const GoogleStrategy = require('passport-google-oauth20');
 const User = require('../models/UserModel');
+const authController = require('../controllers/authController')
 
 // with response, sends users a cookie containing their user id
 passport.serializeUser((user, done) => {
   try {
+    console.log(user)
     done(null, user.id);
   } catch (err) {
     console.log(err);
@@ -43,7 +46,6 @@ passport.use(
           //use google profile info to create new user in db
           user = await User.create({
             googleId,
-            username,
             email,
             firstName,
             lastName,
@@ -57,6 +59,36 @@ passport.use(
     }
   )
 );
+
+passport.use(
+  'local', 
+  new LocalStrategy(
+    {usernameField: 'email'},
+  (username, password, done) => {
+     User.findOne({email: username}, 
+      function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false);}
+      if (user.password !== password) { return done(null, false); }
+      return done (null, user);
+    });
+  }
+));
+
+router.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/' , successRedirect: '/home' }),
+  function(req, res) {
+    console.log('hit router')
+    res.status(200);
+  });
+
+// res.locals.user
+
+router.post('/signup', 
+authController.createUser,
+(req, res) => {
+res.status(200).json({})
+});
 
 router.get('/logout', (req, res) => {
   req.logout();
