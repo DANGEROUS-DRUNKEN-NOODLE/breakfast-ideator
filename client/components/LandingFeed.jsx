@@ -10,12 +10,12 @@ const LandingFeed = (props) => {
   const recipeComponents = props.favoriteRecipes.map((recipe) => {
     return (
       <Recipe
-        key={recipe.title}
-        image={recipe.image}
-        title={recipe.title}
-        id={recipe.id}
+        key={recipe.recipe.title}
+        image={recipe.recipe.image}
+        title={recipe.recipe.title}
+        id={recipe.recipe.id}
         isFav={true}
-        // updateFavoriteIDs={props.updateFavoriteIDs}
+        updateFavoriteIDs={props.updateFavoriteIDs}
       />
     );
   });
