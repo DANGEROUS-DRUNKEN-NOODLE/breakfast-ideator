@@ -1,6 +1,6 @@
 Database creds: username: Admin password: ThmzbzClXQ4oYiNo
 
-Database connection string: mongodb+srv://Admin:ThmzbzClXQ4oYiNo@cluster0.ujwji.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+Database connection string: mongodb://Admin:ThmzbzClXQ4oYiNo@cluster0-shard-00-00.ujwji.mongodb.net:27017,cluster0-shard-00-01.ujwji.mongodb.net:27017,cluster0-shard-00-02.ujwji.mongodb.net:27017/myFirstDatabase?ssl=true&replicaSet=atlas-k5bq84-shard-0&authSource=admin&retryWrites=true&w=majority
 
 Oauth client ID: 898090017943-q1kgue9ti8tr21c6i7itp77ft43hd5r1.apps.googleusercontent.com
 

@@ -63,28 +63,28 @@ passport.use(
 passport.use(
   'local', 
   new LocalStrategy(
-    // {usernameField: 'email'}
-  (email, password, done) => {
-     User.findOne({ email }, 
+    {usernameField: 'email'},
+  (username, password, done) => {
+     User.findOne({email: username}, 
       function (err, user) {
       if (err) { return done(err); }
-      if (!user) {return done(null, false);}
-      if (!user.verifyPassword(password)) { return done(null, false); }
+      if (!user) { return done(null, false);}
+      if (user.password !== password) { return done(null, false); }
       return done (null, user);
     });
   }
 ));
 
 router.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/' }),
+  passport.authenticate('local', { failureRedirect: '/' , successRedirect: '/home' }),
   function(req, res) {
-    res.redirect('/test');
+    console.log('hit router')
+    res.status(200);
   });
 
 // res.locals.user
 
 router.post('/signup', 
-console.log('hit server', req.body),
 authController.createUser,
 (req, res) => {
 res.status(200).json({})

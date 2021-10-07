@@ -1,5 +1,4 @@
 //useful, but currently unused
-const { default: Signup } = require('../../client/components/Signup.jsx');
 const User = require('../models/UserModel')
 
 const authController = {}
@@ -13,13 +12,7 @@ const authController = {}
 
 
 authController.createUser = (req, res, next) => {
-  // const email = req.body.email;
-  // const password = req.body.password;
-  // const firstName = req.body.firstName;
-  // const lastName = req.body.lastName;
-  console.log(req.body)
-
-  if (!email || !password) {
+  if (!req.body.email || !req.body.password) {
     return next({
       log: 'authController.createUser: ERROR invalid username/password',
       message: {

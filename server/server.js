@@ -6,7 +6,22 @@ const passport = require('passport');
 const cookieSession = require('cookie-session');
 const ideatorRouter = require('./routes/api');
 const authRouter = require('./routes/auth.js');
+const mongoose = require('mongoose')
+require('./axiosResponseInterceptor')
+require('./axiosRequestInterceptor')
 const PORT = 3000;
+
+mongoose
+  .connect(process.env.MONGO_URI, {
+    // options for the connect method to parse the URI
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    // sets the name of the DB that our collections are part of
+    dbName: 'breakfasticDB',
+  })
+mongoose.connection.once('open', () => {
+  console.log('Connected to Database');
+});
 
 // handle parsing request body
 app.use(express.json());
@@ -40,7 +55,6 @@ app.use((req, res) =>
 
 // express error handler
 app.use((err, req, res, next) => {
-  console.log(err)
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
     status: 500,

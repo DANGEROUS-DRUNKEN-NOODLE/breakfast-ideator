@@ -12,20 +12,31 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Component } from 'react';
+import axios from 'axios';
 
 const theme = createTheme();
 
-export default function SignInSide() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+class Login extends Component {
 
+login() {
+  let email = document.getElementById("email").value;
+  let password = document.getElementById("password").value;
+  axios.post('/auth/login', {
+    email: email,
+    password: password
+  })
+  .then(res => {
+    console.log('hello');
+    console.log(res.data);
+
+  })
+  .catch(err => {
+    console.log(err);
+  })
+}
+
+render() {
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -36,8 +47,7 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
-            backgroundRepeat: 'no-repeat',
+            backgroundImage: 'url(https://media.istockphoto.com/photos/breakfast-with-bacon-eggs-pancakes-and-toast-picture-id533645537?k=20&m=533645537&s=612x612&w=0&h=KJXCpAo9XQvMI_djcnRMSsz_Y7OGS6z3-8VThxWyR0Q=)',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
             backgroundSize: 'cover',
@@ -60,7 +70,7 @@ export default function SignInSide() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box component="form" noValidate sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -86,10 +96,11 @@ export default function SignInSide() {
                 label="Remember me"
               />
               <Button
-                type="submit"
+                onClick={this.login}
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                href='/home'
               >
                 Sign In
               </Button>
@@ -113,3 +124,6 @@ export default function SignInSide() {
     </ThemeProvider>
   );
 }
+}
+
+export default Login

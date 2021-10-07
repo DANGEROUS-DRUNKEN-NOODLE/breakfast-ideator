@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Component } from 'react';
+import axios from 'axios';
 
 // function Copyright(props) {
 //   return (
@@ -32,8 +33,8 @@ const theme = createTheme();
 
 
 class Signup extends Component {
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
     // this.state = {
     //   firstName: '',
     //   lastName: '',
@@ -42,18 +43,7 @@ class Signup extends Component {
     //   redirect: false
     // }
     // this.handleOnChange = this.handleOnChange.bind(this);
-    this.signUp = this.signUp.bind(this);
-  }
-
-  // handleOnChange = (event) => { //?How can we get the input name so this function can be used for password too?
-  //   // Pass in the data we need to send to state
-  //   const name = event.target.name;
-  //   const inputValue = event.target.value;
-
-  //   if (event.target.name === "firstName") {this.setState({firstName: inputValue });}
-  //   if (event.target.name === "lastName") {this.setState({lastName: inputValue });}
-  //   if (event.target.name === "email") {this.setState({username: inputValue });}
-  //   if (event.target.name === "password") {this.setState({password: inputValue });}
+  //   this.signUp = this.signUp.bind(this);
   // }
   
   signUp () {
@@ -63,20 +53,32 @@ class Signup extends Component {
     let password = document.getElementById("password").value;
     console.log('firstName', firstName)
     // TO DO: CHECK WITH BACKEND ON PROPER ENDPOINT
-    fetch("/auth/signup",  {
+    axios.post('/auth/signup', {
+      firstName: firstName, 
+      lastName: lastName,
+      email: email,
+      password: password
+    })
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+   /* fetch("/auth/signup",  {
         method: "POST",
-        body: JSON.stringify({
+        body: {
           firstName: firstName, 
           lastName: lastName,
           email: email,
           password: password
-        }),
+        },
         headers: { "Content-Type": "application/json" },
       })
       .then(data => data.json())
       .then(data => {
         console.log('data:', data)
-      })
+      })*/
     };
 
   render() {
@@ -148,7 +150,7 @@ class Signup extends Component {
             {/* <Link href="/home"> */}
             <Button
               onClick={this.signUp}
-              type="submit"
+              href='/'
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}

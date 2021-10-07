@@ -51,32 +51,28 @@ class Navbar extends Component {
                 'aria-labelledby': 'basic-button',
               }}
             >
-              <Link
-                to="/pantry"
-                style={{ textDecoration: 'none', color: 'inherit' }}
-              >
+              <Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <MenuItem onClick={this.handleClose}>Home</MenuItem>
+              </Link>
+
+              <Link to="/pantry" style={{ textDecoration: 'none', color: 'inherit' }}>
                 <MenuItem onClick={this.handleClose}>Pantry</MenuItem>
               </Link>
+
+              <Link to="/search" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <MenuItem onClick={this.handleClose}>Search Recipes</MenuItem>
+              </Link>
+
               <MenuItem onClick={this.handleClose}>My account</MenuItem>
-              <a
-                href="/auth/logout"
-                style={{ textDecoration: 'none', color: 'inherit' }}
-              >
+              <a href="/auth/logout" style={{ textDecoration: 'none', color: 'inherit' }}>
                 <MenuItem onClick={this.handleClose}>Logout</MenuItem>
               </a>
             </Menu>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1, textAlign: 'center' }}
-            >
-              <Link
-                to="/"
-                style={{ textDecoration: 'none', color: 'inherit' }}
-              >
-              BreakFASTic!
-              </Link>
 
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+              <Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>
+                BreakFASTic!
+              </Link>
             </Typography>
             {/* <Button color="inherit" href="/auth/google">
               Login
