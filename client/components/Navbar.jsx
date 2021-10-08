@@ -9,6 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
+import BreakFASTicLogoNav from '../assets/BreakFASTicLogoNav.png';
 
 class Navbar extends Component {
   constructor(props) {
@@ -67,7 +68,7 @@ class Navbar extends Component {
 
             <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
               <Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>
-                BreakFASTic!
+              <img src={BreakFASTicLogoNav}></img>
               </Link>
             </Typography>
             <a href="/auth/logout" style={{ textDecoration: 'none', color: 'inherit' }}>
