@@ -15,6 +15,7 @@ const Item = styled(Paper)(({ theme }) => ({
     fontSize: '1em'
 }));
 
+
 const Recipe = (props) => {
 
     const [checked, setChecked] = useState(props.isFav);
@@ -62,6 +63,14 @@ const Recipe = (props) => {
                     icon={<FavoriteBorder />} 
                     checkedIcon={<Favorite />}
                     checked={checked}
+                    sx={{
+                        "&.Mui-checked": {
+                          "&, & + .MuiFormControlLabel-label": {
+                            color: "red"
+                          }
+                        }}}
+            
+                   
                 />
                 <Link
                 to={{

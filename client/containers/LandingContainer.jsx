@@ -40,7 +40,7 @@ export default function LandingContainer (props) {
 
   return (
     <div id="landing-container">
-    <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+    <Typography pt={3} variant="h4" component="div" sx={{ flexGrow: 1, textAlign: 'center' }} textColor='black'>
       Favorite Recipes
     </Typography>
       <LandingFeed 

@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Component } from 'react';
+import Utensils from '../assets/Utensils.png';
 import axios from 'axios';
 
 // function Copyright(props) {
@@ -95,9 +96,9 @@ class Signup extends Component {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
+          <Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <img src={Utensils}></img>
+             </Link>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>

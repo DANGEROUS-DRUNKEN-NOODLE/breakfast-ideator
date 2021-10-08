@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Component } from 'react';
+import Utensils from '../assets/Utensils.png';
 import axios from 'axios';
 
 const theme = createTheme();
@@ -47,7 +48,7 @@ render() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://media.istockphoto.com/photos/breakfast-with-bacon-eggs-pancakes-and-toast-picture-id533645537?k=20&m=533645537&s=612x612&w=0&h=KJXCpAo9XQvMI_djcnRMSsz_Y7OGS6z3-8VThxWyR0Q=)',
+            backgroundImage: 'url(https://images2.alphacoders.com/969/969165.jpg)',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
             backgroundSize: 'cover',
@@ -64,9 +65,12 @@ render() {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
-            </Avatar>
+            </Avatar> */}
+            <Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <img src={Utensils}></img>
+             </Link>
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
@@ -90,10 +94,6 @@ render() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
               />
               <Button
                 onClick={this.login}
